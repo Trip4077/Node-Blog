@@ -68,4 +68,23 @@ router.get('/:id/posts', async (req, res) => {
     }
 })
 
+//Update user by id
+router.put('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+        const update = req.body;
+
+        const updated = await db.update(id, update);
+
+        if(updated) {
+            res.status(201).json(updated);
+        } else {
+            res.status(404).json({ message: "The user with the specified ID does not exist." })
+        }
+    } catch(err) {
+        res.status(500).json({ error: "The user information could not be updated." });
+    }
+
+}) 
+
 module.exports = router;
