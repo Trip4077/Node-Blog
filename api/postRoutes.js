@@ -67,11 +67,11 @@ router.delete('/:id', async (req,res) => {
     try {
         const id = req.params.id; 
         
-        const deletedPost = await db.findById(id) 
+        const deletedPost = await db.getById(id) 
         const deleted = await db.remove(id); 
         
         if(deleted) {
-            res.status(200).json(deletedPost[0])
+            res.status(200).json(deletedPost)
         } else {
             res.status(404).json({ message: "The post with the specified ID does not exist." })
         }

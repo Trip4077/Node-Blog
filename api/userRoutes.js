@@ -87,20 +87,20 @@ router.put('/:id', async (req, res) => {
 }) 
 
 //Delete user by id
-router.delete('/:id', async (req, res) => {
+router.delete('/:id', async (req,res) => {
     try {
-        const id = req.params.id;
-
-        const deleted =  db.remove(id);
-        console.log(deleted)
+        const id = req.params.id; 
+        
+        const deletedUser = await db.getById(id) 
+        const deleted = await db.remove(id); 
+        
         if(deleted) {
-            res.status(200).json(deleted);
+            res.status(200).json(deletedUser)
         } else {
             res.status(404).json({ message: "The user with the specified ID does not exist." })
         }
-    } catch(err) {
-        console.log('catch')
-        res.status(500).json({ error: "The user could not be deleted." }); 
+    } catch(error) {
+        res.status(500).json({ error: "The user could not be removed" });
     }
 })
 
