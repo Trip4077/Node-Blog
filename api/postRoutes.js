@@ -43,6 +43,8 @@ router.get('/:id', async (req, res) => {
     }
 })
 
+
+//Edit post
 router.put('/:id', async (req, res) => {
     try {
         const id = req.params.id;
@@ -57,6 +59,24 @@ router.put('/:id', async (req, res) => {
         }
     } catch(err) {
         res.status(500).json({ error: "The post information could not be updated." });
+    }
+})
+
+//DELETE
+router.delete('/:id', async (req,res) => {
+    try {
+        const id = req.params.id; 
+        
+        const deletedPost = await db.findById(id) 
+        const deleted = await db.remove(id); 
+        
+        if(deleted) {
+            res.status(200).json(deletedPost[0])
+        } else {
+            res.status(404).json({ message: "The post with the specified ID does not exist." })
+        }
+    } catch(error) {
+        res.status(500).json({ error: "The post could not be removed" });
     }
 })
 

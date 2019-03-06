@@ -4,7 +4,14 @@ const router = express.Router();
 const userRoutes = require('./userRoutes');
 const postRoutes = require('./postRoutes');
 
-router.use('/users', userRoutes);
+
+const textUpper = (req, res, next) => {
+    const convertedText = req.body.name.toUpperCase();
+    req.body.name = convertedText;
+    next();
+}
+
+router.use('/users', textUpper, userRoutes);
 router.use('/posts', postRoutes);
 
 module.exports = router;
