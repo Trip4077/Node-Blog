@@ -84,7 +84,24 @@ router.put('/:id', async (req, res) => {
     } catch(err) {
         res.status(500).json({ error: "The user information could not be updated." });
     }
-
 }) 
+
+//Delete user by id
+router.delete('/:id', async (req, res) => {
+    try {
+        const id = req.params.id;
+
+        const deleted =  db.remove(id);
+        console.log(deleted)
+        if(deleted) {
+            res.status(200).json(deleted);
+        } else {
+            res.status(404).json({ message: "The user with the specified ID does not exist." })
+        }
+    } catch(err) {
+        console.log('catch')
+        res.status(500).json({ error: "The user could not be deleted." }); 
+    }
+})
 
 module.exports = router;
