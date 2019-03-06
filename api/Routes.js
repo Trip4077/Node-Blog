@@ -6,8 +6,11 @@ const postRoutes = require('./postRoutes');
 
 
 const textUpper = (req, res, next) => {
-    const convertedText = req.body.name.toUpperCase();
-    req.body.name = convertedText;
+    if(req.body.name) {
+      const convertedText = req.body.name.toUpperCase();
+      req.body.name = convertedText;
+    }
+
     next();
 }
 
